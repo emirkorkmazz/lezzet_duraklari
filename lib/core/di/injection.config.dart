@@ -12,8 +12,13 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:lezzet_duraklari/auth/login/bloc/login_bloc.dart' as _i851;
+import 'package:lezzet_duraklari/auth/register/bloc/register_bloc.dart'
+    as _i151;
 import 'package:lezzet_duraklari/core/di/register_module.dart' as _i273;
 import 'package:lezzet_duraklari/data/data.dart' as _i85;
+import 'package:lezzet_duraklari/domain/auth_repository.dart' as _i480;
+import 'package:lezzet_duraklari/domain/domain.dart' as _i737;
 import 'package:lezzet_duraklari/domain/storage_repository.dart' as _i125;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -41,6 +46,14 @@ extension GetItInjectableX on _i174.GetIt {
           securedStorage: gh<_i558.FlutterSecureStorage>(),
           unsecuredStorage: gh<_i460.SharedPreferences>(),
         ));
+    gh.singleton<_i480.IAuthRepository>(() => _i480.AuthRepository(
+          authClient: gh<_i85.AuthClient>(),
+          storageRepository: gh<_i737.IStorageRepository>(),
+        ));
+    gh.factory<_i151.RegisterBloc>(
+        () => _i151.RegisterBloc(authRepository: gh<_i737.IAuthRepository>()));
+    gh.factory<_i851.LoginBloc>(
+        () => _i851.LoginBloc(authRepository: gh<_i737.IAuthRepository>()));
     return this;
   }
 }

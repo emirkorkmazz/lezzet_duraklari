@@ -25,6 +25,10 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   shared_preferences: ^2.3.2
   dartz: ^0.10.1
+  formz: ^0.7.0
+  flutter_bloc: ^8.1.6
+  flutter_svg: ^2.0.10+1
+  go_router: ^14.3.0
 
 dev_dependencies:
   flutter_test:
@@ -38,10 +42,20 @@ dev_dependencies:
   retrofit_generator: ^9.1.2
   envied_generator: ^0.5.4+1
   injectable_generator: ^2.6.2
+  flutter_gen_runner: ^5.8.0
+  flutter_native_splash: ^2.4.1
 
 
 flutter:
-
-
   uses-material-design: true
 
+  generate: true
+
+  assets:
+    - assets/logos/
+    - assets/icons/
+
+flutter_gen:
+  output: lib/core/gen/
+  integrations:
+    flutter_svg: true

@@ -1,19 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+
 part 'register_request.g.dart';
 
 @JsonSerializable()
-class RegisterRequest with EquatableMixin {
-  String? email;
-  String? password;
-  String? name;
-  String? phoneNumber;
+class RegisterRequest extends Equatable {
+  final String email;
+  final String name;
+  final String surname;
+  final String password;
+  @JsonKey(name: 'phone_number')
+  final String phoneNumber;
+  final String role;
 
-  RegisterRequest({
-    this.email,
-    this.password,
-    this.name,
-    this.phoneNumber,
+  const RegisterRequest({
+    required this.email,
+    required this.name,
+    required this.surname,
+    required this.password,
+    required this.phoneNumber,
+    required this.role,
   });
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
@@ -22,19 +28,24 @@ class RegisterRequest with EquatableMixin {
   Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
 
   @override
-  List<Object?> get props => [email, password, name, phoneNumber];
+  List<Object?> get props =>
+      [email, name, surname, password, phoneNumber, role];
 
   RegisterRequest copyWith({
     String? email,
-    String? password,
     String? name,
+    String? surname,
+    String? password,
     String? phoneNumber,
+    String? role,
   }) {
     return RegisterRequest(
       email: email ?? this.email,
-      password: password ?? this.password,
       name: name ?? this.name,
+      surname: surname ?? this.surname,
+      password: password ?? this.password,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      role: role ?? this.role,
     );
   }
 }
