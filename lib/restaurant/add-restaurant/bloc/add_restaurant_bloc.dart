@@ -225,7 +225,6 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
     AddRestaurantSubmitted event,
     Emitter<AddRestaurantState> emit,
   ) async {
-    print('Base64 Logo Verisi: ${event.logoBase64}');
     if (!state.isValid) return;
     emit(state.copyWith(status: AddRestaurantStatus.loading));
 
