@@ -239,7 +239,7 @@ class _LoginButton extends StatelessWidget {
 
   void _goTodoView(BuildContext context) {
     //
-    context.go(AppRouteName.home.path);
+    context.go(AppRouteName.restaurantHome.path);
     // Alternatif Kullanım: İsimlendirilmiş Rota
     // context.goNamed(AppRouteName.todo.withoutSlash);
   }

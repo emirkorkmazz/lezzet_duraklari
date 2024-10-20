@@ -7,4 +7,7 @@ final class AppUrls {
 
   ///
   static const String login = '/api/user/login';
+
+  ///
+  static const String addRestaurant = '/api/restaurant/add';
 }

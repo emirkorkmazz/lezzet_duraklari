@@ -19,7 +19,10 @@ import 'package:lezzet_duraklari/core/di/register_module.dart' as _i273;
 import 'package:lezzet_duraklari/data/data.dart' as _i85;
 import 'package:lezzet_duraklari/domain/auth_repository.dart' as _i480;
 import 'package:lezzet_duraklari/domain/domain.dart' as _i737;
+import 'package:lezzet_duraklari/domain/restaurant_repository.dart' as _i666;
 import 'package:lezzet_duraklari/domain/storage_repository.dart' as _i125;
+import 'package:lezzet_duraklari/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart'
+    as _i275;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -40,8 +43,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.singleton<_i85.AuthClient>(() => registerModule.authClient);
+    gh.singleton<_i85.RestaurantClient>(() => registerModule.restaurantClient);
     gh.singleton<_i558.FlutterSecureStorage>(
         () => registerModule.securedStorage);
+    gh.singleton<_i666.IRestaurantRepository>(() => _i666.RestaurantRepository(
+        restaurantClient: gh<_i85.RestaurantClient>()));
+    gh.factory<_i275.AddRestaurantBloc>(() => _i275.AddRestaurantBloc(
+        restaurantRepository: gh<_i737.IRestaurantRepository>()));
     gh.factory<_i125.IStorageRepository>(() => _i125.StorageRepository(
           securedStorage: gh<_i558.FlutterSecureStorage>(),
           unsecuredStorage: gh<_i460.SharedPreferences>(),

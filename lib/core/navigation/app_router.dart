@@ -52,14 +52,20 @@ List<RouteBase> get _routes {
     GoRoute(
       path: AppRouteName.signup.path,
       name: AppRouteName.signup.withoutSlash,
-      builder: (context, state) => RegisterView(),
+      builder: (context, state) => const RegisterView(),
     ),
 
     /// Ana Sayfa için Rota
     GoRoute(
-      path: AppRouteName.home.path,
-      name: AppRouteName.home.withoutSlash,
-      builder: (context, state) => const HomePageView(),
+      path: AppRouteName.restaurantHome.path,
+      name: AppRouteName.restaurantHome.withoutSlash,
+      builder: (context, state) => const RestaurantHomePageView(),
+    ),
+
+    GoRoute(
+      path: AppRouteName.addRestaurant.path,
+      name: AppRouteName.addRestaurant.withoutSlash,
+      builder: (context, state) => const AddRestaurantView(),
     ),
   ];
 }
@@ -104,7 +110,7 @@ FutureOr<String?> _routeGuard(
   /// [Durum 2]  Kullanıcı Giriş Yapmış ve Landing Sayfasındaysa
   if (isLoggedIn && currentLocation == AppRouteName.landing.path) {
     log("Kullanıcı giriş yapmış, LandingView'dan DashboardView'e yönlendiriliyor.");
-    return AppRouteName.home.path;
+    return AppRouteName.restaurantHome.path;
   }
 
   /// [Durum 3] Kullanıcı Giriş Yapmamış ve Yetkisiz Sayfada Değilse
@@ -118,7 +124,7 @@ FutureOr<String?> _routeGuard(
       (currentLocation == AppRouteName.login.path ||
           currentLocation == AppRouteName.signup.path)) {
     log("Kullanıcı zaten giriş yapmış, DashboardView'e yönlendiriliyor.");
-    return AppRouteName.home.path;
+    return AppRouteName.restaurantHome.path;
   }
 
   /// [Varsayılan Durum] Yönlendirme yapma, mevcut sayfada kal

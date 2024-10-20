@@ -1,1 +1,2 @@
-export 'views/views.dart';
+export 'add-restaurant/add-restaurant.dart';
+export 'home/home.dart';

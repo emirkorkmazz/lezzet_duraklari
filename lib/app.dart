@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/auth/auth.dart';
+import '/restaurant/restaurant.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +16,10 @@ class App extends StatelessWidget {
         ),
         BlocProvider<RegisterBloc>(
           create: (context) => getIt<RegisterBloc>(),
-        )
+        ),
+        BlocProvider<AddRestaurantBloc>(
+          create: (context) => getIt<AddRestaurantBloc>(),
+        ),
       ],
       child: MaterialApp.router(
         /// [Router]

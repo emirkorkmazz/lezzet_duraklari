@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import '/core/core.dart';
 import '/domain/domain.dart';
 
-class TodoInterceptor extends Interceptor {
-  const TodoInterceptor();
+class TokenInterceptor extends Interceptor {
+  const TokenInterceptor();
   @override
   Future<void> onRequest(
     RequestOptions options,

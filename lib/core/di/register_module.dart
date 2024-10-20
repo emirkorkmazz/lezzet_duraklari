@@ -15,13 +15,23 @@ abstract class RegisterModule {
         BaseOptions(
           baseUrl: EnvConf.baseUrl,
         ),
-      )..interceptors.add(
-          PrettyDioLogger(),
-        );
+      )
+        ..interceptors.add(PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true,
+          error: true,
+        ))
+        ..interceptors.add(TokenInterceptor());
 
   @singleton
   AuthClient get authClient =>
       AuthClient(dio..interceptors.add(PrettyDioLogger()));
+
+  @singleton
+  RestaurantClient get restaurantClient =>
+      RestaurantClient(dio..interceptors.add(PrettyDioLogger()));
 
   ///
   @singleton
