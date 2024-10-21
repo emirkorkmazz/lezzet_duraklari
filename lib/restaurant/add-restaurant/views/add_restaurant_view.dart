@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '/core/core.dart';
 import '/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart';
@@ -43,34 +46,29 @@ class _AddRestaurantViewBody extends StatelessWidget {
 
         /// [2] Restoran Adı Girişi
         _RestaurantNameInput(),
-        SizedBox(height: 2),
 
         /// [3] Restoran Açıklaması Girişi
         _RestaurantDescriptionInput(),
-        SizedBox(height: 2),
 
         /// [4] Restoran Adresi Girişi
         _RestaurantAddressInput(),
-        SizedBox(height: 2),
 
         /// [4] Restoran Telefonu Girişi
         _RestaurantContactInput(),
-        SizedBox(height: 2),
 
         /// [5] Restoran Şehri Girişi
-        _RestaurantCityInput(),
-        SizedBox(height: 2),
+        _CityPicker(),
+        SizedBox(height: 12),
 
         /// [6] Restoran İlçesi Girişi
-        _RestaurantDistrictInput(),
-        SizedBox(height: 2),
-
-        /// [7] Restoran Menü Bilgisi Girişi
-        _RestaurantMenuInput(),
-        SizedBox(height: 2),
+        _DistrictPicker(),
+        SizedBox(height: 12),
+        _MapPicker(),
+        SizedBox(height: 12),
 
         /// [8] Kaydet Butonu
         _SubmitButton(),
+        SizedBox(height: 20),
       ],
     );
   }
@@ -114,7 +112,7 @@ class _AddImageRowState extends State<_AddImageRow> {
         if (_imageFile == null)
           ElevatedButton(
             onPressed: _pickImage,
-            child: const Text('Fotoğraf Seç'),
+            child: const Text('Logo Seç'),
           ),
         const SizedBox(height: 20),
         _imageFile != null
@@ -124,7 +122,7 @@ class _AddImageRowState extends State<_AddImageRow> {
                 width: 100,
                 height: 100,
               )
-            : const Center(child: Text('Henüz fotoğraf seçilmedi.')),
+            : const Center(child: Text('Henüz logo seçilmedi.')),
       ],
     );
   }
@@ -207,57 +205,229 @@ class _RestaurantContactInput extends StatelessWidget {
   }
 }
 
-class _RestaurantCityInput extends StatelessWidget {
-  const _RestaurantCityInput();
+class _CityPicker extends StatelessWidget {
+  const _CityPicker();
 
   @override
   Widget build(BuildContext context) {
-    final read = context.read<AddRestaurantBloc>();
     final state = context.watch<AddRestaurantBloc>().state;
+    final cities = turkeyCities.keys.toList()..sort();
 
-    return AppTextField(
-      hintText: 'Restoran Şehri',
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      prefix: const Icon(Icons.location_city),
-      onChanged: (city) => read.add(AddRestaurantCityChanged(city)),
-      errorText: state.city.displayError?.errorText(context, 'Şehir'),
+    String? currentValue =
+        state.city.value.isNotEmpty && cities.contains(state.city.value)
+            ? state.city.value
+            : null;
+
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        labelText: 'İl',
+        prefixIcon: const Icon(Icons.location_city),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide:
+              BorderSide(color: Theme.of(context).primaryColor, width: 2),
+        ),
+      ),
+      value: currentValue,
+      items: cities.map<DropdownMenuItem<String>>((dynamic city) {
+        return DropdownMenuItem<String>(
+          value: city as String,
+          child: Text(city as String),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        if (newValue != null) {
+          context
+              .read<AddRestaurantBloc>()
+              .add(AddRestaurantCityChanged(newValue));
+          context
+              .read<AddRestaurantBloc>()
+              .add(const AddRestaurantDistrictChanged(''));
+        }
+      },
     );
   }
 }
 
-class _RestaurantDistrictInput extends StatelessWidget {
-  const _RestaurantDistrictInput();
+class _DistrictPicker extends StatelessWidget {
+  const _DistrictPicker();
 
   @override
   Widget build(BuildContext context) {
-    final read = context.read<AddRestaurantBloc>();
     final state = context.watch<AddRestaurantBloc>().state;
+    final districts =
+        state.city.value.isNotEmpty ? turkeyCities[state.city.value] ?? [] : [];
 
-    return AppTextField(
-      hintText: 'Restoran İlçesi',
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      prefix: const Icon(Icons.location_city),
-      onChanged: (district) => read.add(AddRestaurantDistrictChanged(district)),
-      errorText: state.district.displayError?.errorText(context, 'İlçe'),
+    String? currentValue = state.district.value.isNotEmpty &&
+            districts.contains(state.district.value)
+        ? state.district.value
+        : null;
+
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        labelText: 'İlçe',
+        prefixIcon: const Icon(Icons.location_on),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide:
+              BorderSide(color: Theme.of(context).primaryColor, width: 2),
+        ),
+      ),
+      value: currentValue,
+      items: districts.map<DropdownMenuItem<String>>((dynamic district) {
+        return DropdownMenuItem<String>(
+          value: district as String,
+          child: Text(district as String),
+        );
+      }).toList(),
+      onChanged: state.city.value.isNotEmpty
+          ? (String? newValue) {
+              if (newValue != null) {
+                context
+                    .read<AddRestaurantBloc>()
+                    .add(AddRestaurantDistrictChanged(newValue));
+              }
+            }
+          : null,
     );
   }
 }
 
-class _RestaurantMenuInput extends StatelessWidget {
-  const _RestaurantMenuInput();
+class _MapPicker extends StatefulWidget {
+  const _MapPicker();
+
+  @override
+  State<_MapPicker> createState() => _MapPickerState();
+}
+
+class _MapPickerState extends State<_MapPicker> {
+  LatLng? _currentLocation;
+  LatLng? _selectedLocation;
+  final MapController _mapController = MapController();
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Konum servisleri etkin değilse, kullanıcıya bir mesaj gösterin
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // İzinler reddedildiyse, kullanıcıya bir mesaj gösterin
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // İzinler kalıcı olarak reddedildiyse, kullanıcıya bir mesaj gösterin
+      return;
+    }
+
+    // Buraya geldiysek, konum izni alınmış demektir
+    Position position = await Geolocator.getCurrentPosition();
+    setState(() {
+      _currentLocation = LatLng(position.latitude, position.longitude);
+    });
+
+    _mapController.move(_currentLocation!, 15);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final read = context.read<AddRestaurantBloc>();
-
-    return AppTextField(
-      hintText: 'Menü Bilgisi',
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.done,
-      prefix: const Icon(Icons.menu),
-      onChanged: (menu) => read.add(AddRestaurantMenuChanged(menu)),
+    return Column(
+      children: [
+        SizedBox(
+          height: 300,
+          child: FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+              initialCenter: _currentLocation ?? LatLng(41.0082, 28.9784),
+              initialZoom: 15,
+              onTap: (tapPosition, point) {
+                setState(() {
+                  _selectedLocation = point;
+                });
+                context.read<AddRestaurantBloc>().add(
+                      AddRestaurantLocationChanged(
+                          point.latitude, point.longitude),
+                    );
+              },
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.app',
+              ),
+              if (_currentLocation != null)
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: _currentLocation!,
+                      child: const Icon(
+                        Icons.my_location,
+                        color: Colors.blue,
+                        size: 40,
+                      ),
+                    ),
+                  ],
+                ),
+              if (_selectedLocation != null)
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: _selectedLocation!,
+                      child: const Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                        size: 40,
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+        if (_selectedLocation != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              'Seçilen Konum: ${_selectedLocation!.latitude.toStringAsFixed(4)}, ${_selectedLocation!.longitude.toStringAsFixed(4)}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+      ],
     );
   }
 }
@@ -313,7 +483,6 @@ class _SubmitButton extends StatelessWidget {
                     state.contact.value,
                     state.city.value,
                     state.district.value,
-                    state.menu.value,
                     state.latitude,
                     state.longitude,
                     base64Logo,

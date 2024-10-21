@@ -16,7 +16,6 @@ final class AddRestaurantState extends Equatable {
     this.contact = const PhoneNumberInput.pure(),
     this.city = const NameInput.pure(),
     this.district = const NameInput.pure(),
-    this.menu = const NameInput.pure(),
     this.latitude = 0.0,
     this.longitude = 0.0,
     this.logoBase64 = '',
@@ -30,7 +29,6 @@ final class AddRestaurantState extends Equatable {
   final PhoneNumberInput contact;
   final NameInput city;
   final NameInput district;
-  final NameInput menu;
   final double latitude;
   final double longitude;
   final String logoBase64;
@@ -44,7 +42,6 @@ final class AddRestaurantState extends Equatable {
     PhoneNumberInput? contact,
     NameInput? city,
     NameInput? district,
-    NameInput? menu,
     double? latitude,
     double? longitude,
     String? logoBase64,
@@ -58,7 +55,6 @@ final class AddRestaurantState extends Equatable {
       contact: contact ?? this.contact,
       city: city ?? this.city,
       district: district ?? this.district,
-      menu: menu ?? this.menu,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
       logoBase64: logoBase64 ?? this.logoBase64,
@@ -75,7 +71,6 @@ final class AddRestaurantState extends Equatable {
         contact,
         city,
         district,
-        menu,
         latitude,
         longitude,
         logoBase64,

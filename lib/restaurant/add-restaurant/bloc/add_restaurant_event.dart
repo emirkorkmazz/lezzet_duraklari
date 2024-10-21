@@ -48,18 +48,21 @@ final class AddRestaurantDistrictChanged extends AddRestaurantEvent {
   List<Object> get props => [district];
 }
 
-final class AddRestaurantMenuChanged extends AddRestaurantEvent {
-  const AddRestaurantMenuChanged(this.menu);
-  final String menu;
-  @override
-  List<Object> get props => [menu];
-}
-
 final class AddRestaurantLogoChanged extends AddRestaurantEvent {
   const AddRestaurantLogoChanged(this.logoBase64);
   final String logoBase64;
   @override
   List<Object> get props => [logoBase64];
+}
+
+class AddRestaurantLocationChanged extends AddRestaurantEvent {
+  final double latitude;
+  final double longitude;
+
+  const AddRestaurantLocationChanged(this.latitude, this.longitude);
+
+  @override
+  List<Object> get props => [latitude, longitude];
 }
 
 final class AddRestaurantSubmitted extends AddRestaurantEvent {
@@ -70,7 +73,6 @@ final class AddRestaurantSubmitted extends AddRestaurantEvent {
     this.contact,
     this.city,
     this.district,
-    this.menu,
     this.latitude,
     this.longitude,
     this.logoBase64,
@@ -81,7 +83,6 @@ final class AddRestaurantSubmitted extends AddRestaurantEvent {
   final String contact;
   final String city;
   final String district;
-  final String menu;
   final double latitude;
   final double longitude;
   final String logoBase64;
@@ -93,7 +94,6 @@ final class AddRestaurantSubmitted extends AddRestaurantEvent {
         contact,
         city,
         district,
-        menu,
         latitude,
         longitude,
         logoBase64

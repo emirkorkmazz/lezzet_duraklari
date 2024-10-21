@@ -34,10 +34,10 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
     on<AddRestaurantDistrictChanged>(_onDistrictChanged);
 
     ///
-    on<AddRestaurantMenuChanged>(_onMenuChanged);
+    on<AddRestaurantLogoChanged>(_onLogoChanged);
 
     ///
-    on<AddRestaurantLogoChanged>(_onLogoChanged);
+    on<AddRestaurantLocationChanged>(_onLocationChanged);
 
     ///
     on<AddRestaurantSubmitted>(_onSubmitted);
@@ -61,8 +61,7 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           state.address,
           state.contact,
           state.city,
-          state.district,
-          state.menu
+          state.district
         ]),
       ),
     );
@@ -84,8 +83,7 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           state.address,
           state.contact,
           state.city,
-          state.district,
-          state.menu
+          state.district
         ]),
       ),
     );
@@ -108,8 +106,7 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           address,
           state.contact,
           state.city,
-          state.district,
-          state.menu
+          state.district
         ]),
       ),
     );
@@ -132,8 +129,7 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           state.address,
           contact,
           state.city,
-          state.district,
-          state.menu
+          state.district
         ]),
       ),
     );
@@ -156,8 +152,7 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           state.address,
           state.contact,
           city,
-          state.district,
-          state.menu
+          state.district
         ]),
       ),
     );
@@ -180,32 +175,10 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
           state.address,
           state.contact,
           state.city,
-          district,
-          state.menu,
+          district
         ]),
       ),
     );
-  }
-
-  /// [7 Menu] alanı doldurulduğunda kontrol
-  FutureOr<void> _onMenuChanged(
-    AddRestaurantMenuChanged event,
-    Emitter<AddRestaurantState> emit,
-  ) {
-    final menu = NameInput.dirty(event.menu);
-    emit(state.copyWith(
-      menu: menu,
-      status: AddRestaurantStatus.edit,
-      isValid: Formz.validate([
-        state.name,
-        state.description,
-        state.address,
-        state.contact,
-        state.city,
-        state.district,
-        menu
-      ]),
-    ));
   }
 
   /// [8 Logo] alanı doldurulduğunda kontrol
@@ -216,6 +189,18 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
     final logoBase64 = event.logoBase64;
     emit(state.copyWith(
       logoBase64: logoBase64,
+      status: AddRestaurantStatus.edit,
+    ));
+  }
+
+  /// [9 Location] alanı doldurulduğunda kontrol
+  FutureOr<void> _onLocationChanged(
+    AddRestaurantLocationChanged event,
+    Emitter<AddRestaurantState> emit,
+  ) {
+    emit(state.copyWith(
+      latitude: event.latitude,
+      longitude: event.longitude,
       status: AddRestaurantStatus.edit,
     ));
   }
@@ -234,7 +219,6 @@ class AddRestaurantBloc extends Bloc<AddRestaurantEvent, AddRestaurantState> {
       description: state.description.value,
       address: state.address.value,
       contact: state.contact.value,
-      menu: state.menu.value,
       logoBase64: event.logoBase64,
       city: state.city.value,
       district: state.district.value,

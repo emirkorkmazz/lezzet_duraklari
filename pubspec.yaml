@@ -31,6 +31,9 @@ dependencies:
   go_router: ^14.3.0
   image_picker: ^1.1.2
   carousel_slider: ^5.0.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  geolocator: ^13.0.1
 
 dev_dependencies:
   flutter_test:

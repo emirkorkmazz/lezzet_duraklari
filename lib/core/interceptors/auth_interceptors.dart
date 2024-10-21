@@ -50,7 +50,7 @@ class TokenInterceptor extends Interceptor {
           final dio = Dio();
 
           final refreshResponse = await dio.post(
-            '${EnvConf.baseUrl}/api/user/refresh-token',
+            '${EnvConf.baseUrl}${AppUrls.refreshToken}',
             data: {'refreshToken': refreshToken},
           );
 

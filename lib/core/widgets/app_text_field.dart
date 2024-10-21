@@ -94,7 +94,7 @@ class AppTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 80),
+          constraints: const BoxConstraints(minHeight: 71),
           child: TextFormField(
             key: key,
             initialValue: initialValue,

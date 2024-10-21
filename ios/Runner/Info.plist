@@ -32,6 +32,10 @@
 		<string>Fotoğraflarınıza erişim izni gereklidir.</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Kamera erişimi gereklidir.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Bu uygulama, haritada konumunuzu göstermek için konum bilgilerinize ihtiyaç duyar.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Bu uygulama, haritada konumunuzu göstermek için konum bilgilerinize ihtiyaç duyar.</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

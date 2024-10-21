@@ -10,4 +10,7 @@ final class AppUrls {
 
   ///
   static const String addRestaurant = '/api/restaurant/add';
+
+  ///
+  static const String refreshToken = '/api/user/refresh-token';
 }
