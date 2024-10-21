@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '/core/core.dart';
+import '/domain/domain.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RestaurantHomePageView extends StatefulWidget {
   const RestaurantHomePageView({super.key});
@@ -31,7 +33,7 @@ class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
     _MenuItem(
       title: "Çıkış Yap",
       icon: Icons.logout,
-      onTap: (context) => _goLoginView(context),
+      onTap: (context) => _logout(context),
     ),
   ];
 
@@ -91,4 +93,11 @@ class _MenuItemWidget extends StatelessWidget {
   }
 }
 
-void _goLoginView(BuildContext context) => context.go(AppRouteName.login.path);
+void _logout(BuildContext context) async {
+  final storageRepository = getIt<IStorageRepository>();
+
+  await storageRepository.setToken(null);
+  await storageRepository.setIsLogged(isLogged: false);
+
+  context.go(AppRouteName.login.path);
+}

@@ -52,6 +52,7 @@ class AuthRepository implements IAuthRepository {
       await Future.wait(<Future<void>>[
         /// Token'ı Cache'le
         storageRepository.setToken(response.user?.token),
+        storageRepository.setRefreshToken(response.user?.refreshToken),
 
         /// Kullanıcın Giriş Yaptığını Cache'le
         storageRepository.setIsLogged(isLogged: true),
@@ -111,6 +112,9 @@ class AuthRepository implements IAuthRepository {
       await Future.wait(<Future<void>>[
         /// Token'ı Cache'ten temizle
         storageRepository.setToken(null),
+
+        /// Refresh Token'ı Cache'ten temizle
+        storageRepository.setRefreshToken(null),
 
         /// Çıkış Yaptığını Cache'le
         storageRepository.setIsLogged(),

@@ -2,7 +2,8 @@ enum AppStorage {
   ///
   token('token'),
   isFirstTimeAppOpen('isFirstTimeAppOpen'),
-  isLoggedIn('isLoggedIn');
+  isLoggedIn('isLoggedIn'),
+  refreshToken('refreshToken');
 
   ///
   const AppStorage(this.key);

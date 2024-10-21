@@ -28,6 +28,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       role: json['role'] as String?,
       isVerified: (json['isVerified'] as num?)?.toInt(),
       token: json['token'] as String?,
+      refreshToken: json['refreshToken'] as String?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -38,4 +39,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'role': instance.role,
       'isVerified': instance.isVerified,
       'token': instance.token,
+      'refreshToken': instance.refreshToken,
     };

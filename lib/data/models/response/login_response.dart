@@ -40,6 +40,7 @@ class User with EquatableMixin {
   String? role;
   int? isVerified;
   String? token;
+  String? refreshToken;
 
   User({
     this.id,
@@ -49,6 +50,7 @@ class User with EquatableMixin {
     this.role,
     this.isVerified,
     this.token,
+    this.refreshToken,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -57,7 +59,7 @@ class User with EquatableMixin {
 
   @override
   List<Object?> get props =>
-      [id, email, name, phoneNumber, role, isVerified, token];
+      [id, email, name, phoneNumber, role, isVerified, token, refreshToken];
 
   User copyWith({
     String? id,
@@ -67,6 +69,7 @@ class User with EquatableMixin {
     String? role,
     int? isVerified,
     String? token,
+    String? refreshToken,
   }) {
     return User(
       id: id ?? this.id,
@@ -76,6 +79,7 @@ class User with EquatableMixin {
       role: role ?? this.role,
       isVerified: isVerified ?? this.isVerified,
       token: token ?? this.token,
+      refreshToken: refreshToken ?? this.refreshToken,
     );
   }
 }

@@ -10,6 +10,11 @@ abstract class IStorageRepository {
   Future<String?> getToken();
   Future<void> setToken(String? value);
 
+  /// AuthInterceptor'da Refresh Token isteyen endpoint'lerin
+  /// request header'ına ekleyeceğiz
+  Future<String?> getRefreshToken();
+  Future<void> setRefreshToken(String? value);
+
   /// Uygulamanın cihazda ilk defa açılıp-açılmadığını kontrol
   /// GoRouter'ın redirect parametresinde sorgulayacağız
   Future<bool?> getIsFirstTimeAppOpen();
@@ -41,6 +46,17 @@ class StorageRepository implements IStorageRepository {
   @override
   Future<void> setToken(String? value) => securedStorage.write(
         key: AppStorage.token.key,
+        value: value,
+      );
+
+  @override
+  Future<String?> getRefreshToken() => securedStorage.read(
+        key: AppStorage.refreshToken.key,
+      );
+
+  @override
+  Future<void> setRefreshToken(String? value) => securedStorage.write(
+        key: AppStorage.refreshToken.key,
         value: value,
       );
 
