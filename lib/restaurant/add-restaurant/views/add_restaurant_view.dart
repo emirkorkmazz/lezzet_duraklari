@@ -9,7 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '/core/core.dart';
-import '/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart';
+import '/restaurant/restaurant.dart';
 
 class AddRestaurantView extends StatelessWidget {
   const AddRestaurantView({super.key});
@@ -211,38 +211,17 @@ class _CityPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AddRestaurantBloc>().state;
-    final cities = turkeyCities.keys.toList()..sort();
+    final cities = turkeyCities.keys.toList().cast<String>()..sort();
 
     String? currentValue =
         state.city.value.isNotEmpty && cities.contains(state.city.value)
             ? state.city.value
             : null;
 
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: 'İl',
-        prefixIcon: const Icon(Icons.location_city),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide:
-              BorderSide(color: Theme.of(context).primaryColor, width: 2),
-        ),
-      ),
+    return CustomDropdown(
       value: currentValue,
-      items: cities.map<DropdownMenuItem<String>>((dynamic city) {
-        return DropdownMenuItem<String>(
-          value: city as String,
-          child: Text(city as String),
-        );
-      }).toList(),
+      items: cities,
+      labelText: 'İl',
       onChanged: (String? newValue) {
         if (newValue != null) {
           context
@@ -263,39 +242,20 @@ class _DistrictPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AddRestaurantBloc>().state;
-    final districts =
-        state.city.value.isNotEmpty ? turkeyCities[state.city.value] ?? [] : [];
+    final districts = state.city.value.isNotEmpty
+        ? turkeyCities[state.city.value]?.cast<String>() ??
+            [] // Burada cast yapıldı
+        : [];
 
     String? currentValue = state.district.value.isNotEmpty &&
             districts.contains(state.district.value)
         ? state.district.value
         : null;
 
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: 'İlçe',
-        prefixIcon: const Icon(Icons.location_on),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide:
-              BorderSide(color: Theme.of(context).primaryColor, width: 2),
-        ),
-      ),
+    return CustomDropdown(
       value: currentValue,
-      items: districts.map<DropdownMenuItem<String>>((dynamic district) {
-        return DropdownMenuItem<String>(
-          value: district as String,
-          child: Text(district as String),
-        );
-      }).toList(),
+      items: districts.cast<String>(),
+      labelText: 'İlçe',
       onChanged: state.city.value.isNotEmpty
           ? (String? newValue) {
               if (newValue != null) {
@@ -419,14 +379,6 @@ class _MapPickerState extends State<_MapPicker> {
             ],
           ),
         ),
-        if (_selectedLocation != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              'Seçilen Konum: ${_selectedLocation!.latitude.toStringAsFixed(4)}, ${_selectedLocation!.longitude.toStringAsFixed(4)}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ),
       ],
     );
   }

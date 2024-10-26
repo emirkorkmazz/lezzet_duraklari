@@ -24,6 +24,10 @@ abstract class IStorageRepository {
   /// GoRouter'ın redirect parametresinde sorgulayacağız
   Future<bool?> getIsLogged();
   Future<void> setIsLogged({bool isLogged = false});
+
+  /// Restaurant ID'yi Cache'le
+  Future<String?> getRestaurantId();
+  Future<void> setRestaurantId(String? value);
 }
 
 @Injectable(as: IStorageRepository)
@@ -59,6 +63,21 @@ class StorageRepository implements IStorageRepository {
         key: AppStorage.refreshToken.key,
         value: value,
       );
+  @override
+  Future<String?> getRestaurantId() async {
+    final String? restaurantId = await unsecuredStorage.getString(
+      AppStorage.restaurantId.key,
+    );
+    return restaurantId;
+  }
+
+  @override
+  Future<void> setRestaurantId(String? value) async {
+    await unsecuredStorage.setString(
+      AppStorage.restaurantId.key,
+      value ?? '',
+    );
+  }
 
   @override
   Future<bool?> getIsFirstTimeAppOpen() async => unsecuredStorage.getBool(

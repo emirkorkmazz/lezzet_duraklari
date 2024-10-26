@@ -13,4 +13,13 @@ final class AppUrls {
 
   ///
   static const String refreshToken = '/api/user/refresh-token';
+
+  ///
+  static const String getMenuPhotos = '/api/menu/photos';
+
+  ///
+  static const String deleteMenuPhoto = '/api/menu/delete';
+
+  ///
+  static const String addMenuPhotos = '/api/menu/upload';
 }

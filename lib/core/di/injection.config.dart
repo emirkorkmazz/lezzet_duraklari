@@ -23,6 +23,8 @@ import 'package:lezzet_duraklari/domain/restaurant_repository.dart' as _i666;
 import 'package:lezzet_duraklari/domain/storage_repository.dart' as _i125;
 import 'package:lezzet_duraklari/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart'
     as _i275;
+import 'package:lezzet_duraklari/restaurant/restaurant_menu/cubit/restaurant_menu_cubit.dart'
+    as _i444;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -53,6 +55,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i125.IStorageRepository>(() => _i125.StorageRepository(
           securedStorage: gh<_i558.FlutterSecureStorage>(),
           unsecuredStorage: gh<_i460.SharedPreferences>(),
+        ));
+    gh.factory<_i444.RestaurantMenuCubit>(() => _i444.RestaurantMenuCubit(
+          restaurantRepository: gh<_i737.IRestaurantRepository>(),
+          storageRepository: gh<_i737.IStorageRepository>(),
         ));
     gh.singleton<_i480.IAuthRepository>(() => _i480.AuthRepository(
           authClient: gh<_i85.AuthClient>(),

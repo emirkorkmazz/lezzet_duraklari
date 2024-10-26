@@ -14,4 +14,9 @@ extension ValidatorX on String {
 
   ///
   bool get isValidPhoneNumber => RegExp(r'^[0-9]{10}$').hasMatch(this);
+
+  ///
+  bool get isValidPhoto =>
+      RegExp(r'\.(jpg|jpeg|png|gif|bmp|webp)$', caseSensitive: false)
+          .hasMatch(this);
 }

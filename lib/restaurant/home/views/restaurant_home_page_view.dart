@@ -25,6 +25,7 @@ class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
     _MenuItem(
       title: "Menü Düzenle",
       icon: Icons.coffee,
+      onTap: (context) => context.push(AppRouteName.restaurantMenu.path),
     ),
     _MenuItem(
       title: "Yorumlarım",
@@ -98,6 +99,8 @@ void _logout(BuildContext context) async {
 
   await storageRepository.setToken(null);
   await storageRepository.setIsLogged(isLogged: false);
+  await storageRepository.setRestaurantId(null);
+  await storageRepository.setRefreshToken(null);
 
   context.go(AppRouteName.login.path);
 }
