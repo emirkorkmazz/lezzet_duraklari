@@ -8,7 +8,6 @@ class AddRestaurantRequest with EquatableMixin {
   String? description;
   String? address;
   String? contact;
-  String? menu;
   String? logoBase64;
   String? city;
   String? district;
@@ -20,7 +19,6 @@ class AddRestaurantRequest with EquatableMixin {
     this.description,
     this.address,
     this.contact,
-    this.menu,
     this.logoBase64,
     this.city,
     this.district,
@@ -39,7 +37,6 @@ class AddRestaurantRequest with EquatableMixin {
         description,
         address,
         contact,
-        menu,
         logoBase64,
         city,
         district,
@@ -52,7 +49,6 @@ class AddRestaurantRequest with EquatableMixin {
     String? description,
     String? address,
     String? contact,
-    String? menu,
     String? logoBase64,
     String? city,
     String? district,
@@ -64,7 +60,6 @@ class AddRestaurantRequest with EquatableMixin {
       description: description ?? this.description,
       address: address ?? this.address,
       contact: contact ?? this.contact,
-      menu: menu ?? this.menu,
       logoBase64: logoBase64 ?? this.logoBase64,
       city: city ?? this.city,
       district: district ?? this.district,

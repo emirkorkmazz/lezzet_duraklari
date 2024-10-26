@@ -29,6 +29,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       isVerified: (json['isVerified'] as num?)?.toInt(),
       token: json['token'] as String?,
       refreshToken: json['refreshToken'] as String?,
+      restaurantId: json['restaurantId'] as String?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -40,4 +41,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'isVerified': instance.isVerified,
       'token': instance.token,
       'refreshToken': instance.refreshToken,
+      'restaurantId': instance.restaurantId,
     };

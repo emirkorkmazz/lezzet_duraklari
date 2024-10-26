@@ -163,7 +163,7 @@ class _LoginButton extends StatelessWidget {
         /// Giriş Hatalı ise
         if (state.status == LoginStatus.failure) {
           final errorText = Text(
-            'Hata',
+            'Girdiğiniz email veya parola hatalı',
             style: const TextStyle(
               color: Colors.white,
             ),

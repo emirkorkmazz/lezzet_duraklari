@@ -67,6 +67,12 @@ List<RouteBase> get _routes {
       name: AppRouteName.addRestaurant.withoutSlash,
       builder: (context, state) => const AddRestaurantView(),
     ),
+
+    GoRoute(
+      path: AppRouteName.restaurantMenu.path,
+      name: AppRouteName.restaurantMenu.withoutSlash,
+      builder: (context, state) => const RestaurantMenuView(),
+    ),
   ];
 }
 
@@ -83,6 +89,9 @@ FutureOr<String?> _routeGuard(
   /// Kullanıcının Giriş Yapıp Yapmadığını Kontrol Etme
   final isLoggedIn = (await storageRepository.getIsLogged()) ?? false;
   log('Durumlar - isFirstTimeAppOpen: $isFirstTimeAppOpen, isLoggedIn: $isLoggedIn');
+  log('Restaurant ID: ${await storageRepository.getRestaurantId()}');
+  log('Refresh Token: ${await storageRepository.getRefreshToken()}');
+  log('Token: ${await storageRepository.getToken()}');
 
   /// Kullanıcının Bulunduğu Sayfanın Yolunu Alma
   final currentLocation = state.matchedLocation;

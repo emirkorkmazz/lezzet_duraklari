@@ -18,6 +18,16 @@ abstract class RestaurantClient {
       @Body() AddRestaurantRequest request);
 
   ///
-  /// @POST(AppUrls.login)
-  /// Future<LoginResponse> loginUser(@Body() LoginRequest request);
+  @POST(AppUrls.addMenuPhotos)
+  Future<AddMenuPhotosResponse> addMenuPhotos(
+      @Body() AddMenuPhotosRequest request);
+
+  ///
+  @POST(AppUrls.getMenuPhotos)
+  Future<GetMenuPhotosResponse> getMenuPhotos(
+      @Body() GetMenuPhotosRequest request);
+
+  @DELETE(AppUrls.deleteMenuPhoto)
+  Future<DeleteMenuPhotoResponse> deleteMenuPhoto(
+      @Body() DeleteMenuPhotoRequest request);
 }

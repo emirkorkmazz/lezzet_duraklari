@@ -53,6 +53,9 @@ class AuthRepository implements IAuthRepository {
         /// Token'ı Cache'le
         storageRepository.setToken(response.user?.token),
         storageRepository.setRefreshToken(response.user?.refreshToken),
+        storageRepository.setRestaurantId(response.user?.role == 'BusinessOwner'
+            ? response.user?.restaurantId ?? ''
+            : null),
 
         /// Kullanıcın Giriş Yaptığını Cache'le
         storageRepository.setIsLogged(isLogged: true),
