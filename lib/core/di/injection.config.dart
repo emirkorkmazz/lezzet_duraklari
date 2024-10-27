@@ -27,6 +27,8 @@ import 'package:lezzet_duraklari/restaurant/restaurant_menu/cubit/restaurant_men
     as _i444;
 import 'package:lezzet_duraklari/restaurant/restaurant_review/cubit/restaurant_review_cubit.dart'
     as _i569;
+import 'package:lezzet_duraklari/restaurant/review_reply/bloc/review_reply_bloc.dart'
+    as _i317;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -53,6 +55,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i666.IRestaurantRepository>(() => _i666.RestaurantRepository(
         restaurantClient: gh<_i85.RestaurantClient>()));
     gh.factory<_i275.AddRestaurantBloc>(() => _i275.AddRestaurantBloc(
+        restaurantRepository: gh<_i737.IRestaurantRepository>()));
+    gh.factory<_i317.ReviewReplyBloc>(() => _i317.ReviewReplyBloc(
         restaurantRepository: gh<_i737.IRestaurantRepository>()));
     gh.factory<_i125.IStorageRepository>(() => _i125.StorageRepository(
           securedStorage: gh<_i558.FlutterSecureStorage>(),

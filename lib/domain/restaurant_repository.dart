@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 
 import '/core/core.dart';
 import '/data/data.dart';
-import '/domain/domain.dart';
 
 abstract class IRestaurantRepository {
   Future<Either<AuthFailure, AddRestaurantResponse>> addRestaurant({
@@ -25,6 +24,10 @@ abstract class IRestaurantRepository {
   Future<Either<AuthFailure, RestaurantReviewsListResponse>>
       restaurantReviewsList({
     required RestaurantReviewsListRequest request,
+  });
+
+  Future<Either<AuthFailure, ReviewReplyResponse>> reviewReply({
+    required ReviewReplyRequest request,
   });
 }
 
@@ -168,6 +171,33 @@ class RestaurantRepository implements IRestaurantRepository {
       }
 
       /// [Restaurant Yorumları Getirme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, ReviewReplyResponse>> reviewReply({
+    required ReviewReplyRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.reviewReply(request);
+
+      /// Kullanıcı [Restaurant Yorumu Yanıtı Gönder] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Yorumu Yanıtı Gönder İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Yorumu Yanıtı Gönder İşlemi Başarılı ise]
       return Right(response);
     } catch (e) {
       return Left(

@@ -49,13 +49,13 @@ class TokenInterceptor extends Interceptor {
           // refresh token için istek yap
           final dio = Dio();
 
-          final refreshResponse = await dio.post(
+          final refreshResponse = await dio.post<Map<String, dynamic>>(
             '${EnvConf.baseUrl}${AppUrls.refreshToken}',
             data: {'refreshToken': refreshToken},
           );
 
           if (refreshResponse.statusCode == 200) {
-            final newToken = refreshResponse.data['token'] as String?;
+            final newToken = refreshResponse.data?['token'] as String?;
 
             // Yeni token'ı storage'a kaydet
             await storageRepository.setToken(newToken);
@@ -65,7 +65,7 @@ class TokenInterceptor extends Interceptor {
             requestOptions.headers['Authorization'] = 'Bearer $newToken';
 
             // Yeni istek ile işlemi tamamla
-            final response = await Dio().fetch(requestOptions);
+            final response = await Dio().fetch<dynamic>(requestOptions);
             return handler.resolve(response);
           } else {
             // Eğer refresh-token isteği başarısız olursa oturumu sonlandır

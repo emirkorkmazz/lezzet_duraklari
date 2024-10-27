@@ -79,6 +79,18 @@ List<RouteBase> get _routes {
       name: AppRouteName.restaurantReview.withoutSlash,
       builder: (context, state) => const RestaurantReviewView(),
     ),
+
+    GoRoute(
+      path: AppRouteName.reviewReply.path,
+      name: AppRouteName.reviewReply.withoutSlash,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+        return ReviewReplyView(
+          reviewId: extra['reviewId'] as String,
+          comment: extra['comment'] as String,
+        );
+      },
+    ),
   ];
 }
 

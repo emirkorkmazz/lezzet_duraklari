@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../data/models/response/restaurant_reviews_list_response.dart';
 import '/core/core.dart';
 import '../cubit/restaurant_review_cubit.dart';
@@ -131,7 +132,13 @@ class _ReviewCard extends StatelessWidget {
             if (!(review.isReviewReply ?? false))
               TextButton(
                 onPressed: () {
-                  // TODO: Yorum cevaplama sayfasına yönlendir
+                  context.push(
+                    AppRouteName.reviewReply.path,
+                    extra: {
+                      'reviewId': review.id,
+                      'comment': review.comment,
+                    },
+                  );
                 },
                 child: const Text('Cevapla'),
               ),

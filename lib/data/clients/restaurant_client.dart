@@ -34,4 +34,9 @@ abstract class RestaurantClient {
   @POST(AppUrls.restaurantReviewsList)
   Future<RestaurantReviewsListResponse> restaurantReviewsList(
       @Body() RestaurantReviewsListRequest request);
+
+  @POST(AppUrls.addReviewReply)
+  Future<ReviewReplyResponse> reviewReply(
+    @Body() ReviewReplyRequest request,
+  );
 }
