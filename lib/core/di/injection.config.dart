@@ -25,6 +25,8 @@ import 'package:lezzet_duraklari/restaurant/add-restaurant/bloc/add_restaurant_b
     as _i275;
 import 'package:lezzet_duraklari/restaurant/restaurant_menu/cubit/restaurant_menu_cubit.dart'
     as _i444;
+import 'package:lezzet_duraklari/restaurant/restaurant_review/cubit/restaurant_review_cubit.dart'
+    as _i569;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -57,6 +59,10 @@ extension GetItInjectableX on _i174.GetIt {
           unsecuredStorage: gh<_i460.SharedPreferences>(),
         ));
     gh.factory<_i444.RestaurantMenuCubit>(() => _i444.RestaurantMenuCubit(
+          restaurantRepository: gh<_i737.IRestaurantRepository>(),
+          storageRepository: gh<_i737.IStorageRepository>(),
+        ));
+    gh.factory<_i569.RestaurantReviewCubit>(() => _i569.RestaurantReviewCubit(
           restaurantRepository: gh<_i737.IRestaurantRepository>(),
           storageRepository: gh<_i737.IStorageRepository>(),
         ));

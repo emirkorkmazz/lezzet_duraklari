@@ -22,4 +22,10 @@ final class AppUrls {
 
   ///
   static const String addMenuPhotos = '/api/menu/upload';
+
+  ///
+  static const String restaurantReviewsList = '/api/review/restaurant';
+
+  ///
+  static const String addReviewReply = '/api/review/reply';
 }

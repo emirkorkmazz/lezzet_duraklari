@@ -30,4 +30,8 @@ abstract class RestaurantClient {
   @DELETE(AppUrls.deleteMenuPhoto)
   Future<DeleteMenuPhotoResponse> deleteMenuPhoto(
       @Body() DeleteMenuPhotoRequest request);
+
+  @POST(AppUrls.restaurantReviewsList)
+  Future<RestaurantReviewsListResponse> restaurantReviewsList(
+      @Body() RestaurantReviewsListRequest request);
 }

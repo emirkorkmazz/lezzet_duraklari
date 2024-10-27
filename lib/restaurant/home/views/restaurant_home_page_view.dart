@@ -30,6 +30,7 @@ class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
     _MenuItem(
       title: "Yorumlarım",
       icon: Icons.comment,
+      onTap: (context) => context.push(AppRouteName.restaurantReview.path),
     ),
     _MenuItem(
       title: "Çıkış Yap",

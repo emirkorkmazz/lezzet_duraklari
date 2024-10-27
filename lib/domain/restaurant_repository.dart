@@ -21,6 +21,11 @@ abstract class IRestaurantRepository {
   Future<Either<AuthFailure, DeleteMenuPhotoResponse>> deleteMenuPhoto({
     required DeleteMenuPhotoRequest request,
   });
+
+  Future<Either<AuthFailure, RestaurantReviewsListResponse>>
+      restaurantReviewsList({
+    required RestaurantReviewsListRequest request,
+  });
 }
 
 @Singleton(as: IRestaurantRepository)
@@ -135,6 +140,34 @@ class RestaurantRepository implements IRestaurantRepository {
       }
 
       /// [Restaurant Menü Silme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantReviewsListResponse>>
+      restaurantReviewsList({
+    required RestaurantReviewsListRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.restaurantReviewsList(request);
+
+      /// Kullanıcı [Restaurant Yorumları Getirme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Yorumları Getirme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Yorumları Getirme İşlemi Başarılı ise]
       return Right(response);
     } catch (e) {
       return Left(
