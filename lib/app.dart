@@ -26,6 +26,9 @@ class App extends StatelessWidget {
         BlocProvider<RestaurantReviewCubit>(
           create: (context) => getIt<RestaurantReviewCubit>(),
         ),
+        BlocProvider<RestaurantUpdateBloc>(
+          create: (context) => getIt<RestaurantUpdateBloc>(),
+        ),
       ],
       child: MaterialApp.router(
         /// [Router]

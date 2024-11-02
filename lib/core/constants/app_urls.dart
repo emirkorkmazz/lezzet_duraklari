@@ -28,4 +28,10 @@ final class AppUrls {
 
   ///
   static const String addReviewReply = '/api/review/reply';
+
+  ///
+  static const String getRestaurantById = '/api/restaurant/{id}';
+
+  ///
+  static const String updateRestaurant = '/api/restaurant/update';
 }

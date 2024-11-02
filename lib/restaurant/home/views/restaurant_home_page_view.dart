@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '/core/core.dart';
 import '/domain/domain.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RestaurantHomePageView extends StatefulWidget {
   const RestaurantHomePageView({super.key});
@@ -14,35 +14,36 @@ class RestaurantHomePageView extends StatefulWidget {
 class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
   final List<_MenuItem> menuItems = [
     _MenuItem(
-      title: "Restoran Ekle",
+      title: 'Restoran Ekle',
       icon: Icons.add_business,
       onTap: (context) => context.push(AppRouteName.addRestaurant.path),
     ),
     _MenuItem(
-      title: "Restoran Düzenle",
+      title: 'Restoran Düzenle',
       icon: Icons.edit_road,
+      onTap: (context) => context.push(AppRouteName.restaurantUpdate.path),
     ),
     _MenuItem(
-      title: "Menü Düzenle",
+      title: 'Menü Düzenle',
       icon: Icons.coffee,
       onTap: (context) => context.push(AppRouteName.restaurantMenu.path),
     ),
     _MenuItem(
-      title: "Yorumlarım",
+      title: 'Yorumlarım',
       icon: Icons.comment,
       onTap: (context) => context.push(AppRouteName.restaurantReview.path),
     ),
     _MenuItem(
-      title: "Çıkış Yap",
+      title: 'Çıkış Yap',
       icon: Icons.logout,
-      onTap: (context) => _logout(context),
+      onTap: _logout,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: _RestaurantHomePageViewBody(menuItems: menuItems),
     );
   }
@@ -51,7 +52,7 @@ class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
 class _RestaurantHomePageViewBody extends StatelessWidget {
   final List<_MenuItem> menuItems;
 
-  const _RestaurantHomePageViewBody({required this.menuItems, super.key});
+  const _RestaurantHomePageViewBody({required this.menuItems});
 
   @override
   Widget build(BuildContext context) {

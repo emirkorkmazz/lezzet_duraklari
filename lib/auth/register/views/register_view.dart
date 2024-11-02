@@ -83,18 +83,18 @@ class _RegisterWelcomeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Hesap Oluştur',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
           ),
         ),
         Text(
           'Lezzet Durakları Uygulamamıza Katılın',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
@@ -295,9 +295,9 @@ class _RegisterButton extends StatelessWidget {
       listener: (context, state) {
         /// Giriş Hatalı ise
         if (state.status == RegisterStatus.failure) {
-          final errorText = Text(
+          final errorText = const Text(
             'Hesap Oluşturma Hatası',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           );
@@ -314,9 +314,9 @@ class _RegisterButton extends StatelessWidget {
 
         ///
         if (state.status == RegisterStatus.authenticated) {
-          final successText = Text(
+          final successText = const Text(
             'Hesap Oluşturma Başarılı',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           );

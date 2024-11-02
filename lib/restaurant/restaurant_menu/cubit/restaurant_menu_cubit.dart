@@ -19,10 +19,12 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
   final IStorageRepository storageRepository;
 
   Future<void> fetchMenuPhotos() async {
-    emit(state.copyWith(
-      status: RestaurantMenuStatus.loading,
-      message: null,
-    ));
+    emit(
+      state.copyWith(
+        status: RestaurantMenuStatus.loading,
+        message: null,
+      ),
+    );
 
     final restaurantId = await storageRepository.getRestaurantId();
     final result = await restaurantRepository.getMenuPhotos(
@@ -30,9 +32,11 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
     );
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: RestaurantMenuStatus.failure,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: RestaurantMenuStatus.failure,
+        ),
+      ),
       (response) => emit(
         state.copyWith(
           status: RestaurantMenuStatus.success,
@@ -44,10 +48,12 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
   }
 
   Future<void> submitMenuPhotos() async {
-    emit(state.copyWith(
-      status: RestaurantMenuStatus.submitting,
-      message: null,
-    ));
+    emit(
+      state.copyWith(
+        status: RestaurantMenuStatus.submitting,
+        message: null,
+      ),
+    );
 
     final restaurantId = await storageRepository.getRestaurantId();
     final request = AddMenuPhotosRequest(
@@ -60,14 +66,18 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
     final result = await restaurantRepository.addMenuPhotos(request: request);
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: RestaurantMenuStatus.failure,
-        message: 'Fotoğraf yüklenirken bir hata oluştu',
-      )),
-      (response) => emit(state.copyWith(
-        status: RestaurantMenuStatus.submitted,
-        message: 'Menü fotoğrafları başarıyla kaydedildi',
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: RestaurantMenuStatus.failure,
+          message: 'Fotoğraf yüklenirken bir hata oluştu',
+        ),
+      ),
+      (response) => emit(
+        state.copyWith(
+          status: RestaurantMenuStatus.submitted,
+          message: 'Menü fotoğrafları başarıyla kaydedildi',
+        ),
+      ),
     );
 
     await fetchMenuPhotos();
@@ -131,27 +141,33 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
         switch (menuNumber) {
           case 'menu1':
             successMessage = 'Menü 1 başarıyla silindi';
-            emit(state.copyWith(
-              photo1: emptyPhoto,
-              status: RestaurantMenuStatus.deleted,
-              message: successMessage,
-            ));
+            emit(
+              state.copyWith(
+                photo1: emptyPhoto,
+                status: RestaurantMenuStatus.deleted,
+                message: successMessage,
+              ),
+            );
             break;
           case 'menu2':
             successMessage = 'Menü 2 başarıyla silindi';
-            emit(state.copyWith(
-              photo2: emptyPhoto,
-              status: RestaurantMenuStatus.deleted,
-              message: successMessage,
-            ));
+            emit(
+              state.copyWith(
+                photo2: emptyPhoto,
+                status: RestaurantMenuStatus.deleted,
+                message: successMessage,
+              ),
+            );
             break;
           case 'menu3':
             successMessage = 'Menü 3 başarıyla silindi';
-            emit(state.copyWith(
-              photo3: emptyPhoto,
-              status: RestaurantMenuStatus.deleted,
-              message: successMessage,
-            ));
+            emit(
+              state.copyWith(
+                photo3: emptyPhoto,
+                status: RestaurantMenuStatus.deleted,
+                message: successMessage,
+              ),
+            );
             break;
         }
         _resetToSuccess();
@@ -163,10 +179,12 @@ class RestaurantMenuCubit extends Cubit<RestaurantMenuState> {
     await Future.delayed(const Duration(milliseconds: 500));
     if (state.status == RestaurantMenuStatus.editing ||
         state.status == RestaurantMenuStatus.deleted) {
-      emit(state.copyWith(
-        status: RestaurantMenuStatus.success,
-        message: null,
-      ));
+      emit(
+        state.copyWith(
+          status: RestaurantMenuStatus.success,
+          message: null,
+        ),
+      );
     }
   }
 }

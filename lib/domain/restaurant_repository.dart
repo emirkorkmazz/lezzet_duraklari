@@ -29,6 +29,14 @@ abstract class IRestaurantRepository {
   Future<Either<AuthFailure, ReviewReplyResponse>> reviewReply({
     required ReviewReplyRequest request,
   });
+
+  Future<Either<AuthFailure, RestaurantUpdateResponse>> updateRestaurant({
+    required RestaurantUpdateRequest request,
+  });
+
+  Future<Either<AuthFailure, RestaurantDetailResponse>> restaurantDetail({
+    required String restaurantId,
+  });
 }
 
 @Singleton(as: IRestaurantRepository)
@@ -198,6 +206,60 @@ class RestaurantRepository implements IRestaurantRepository {
       }
 
       /// [Restaurant Yorumu Yanıtı Gönder İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantDetailResponse>> restaurantDetail({
+    required String restaurantId,
+  }) async {
+    try {
+      final response = await restaurantClient.getRestaurantById(restaurantId);
+
+      /// Kullanıcı [Restaurant Detayı Getirme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Detayı Getirme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Detayı Getirme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantUpdateResponse>> updateRestaurant({
+    required RestaurantUpdateRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.updateRestaurant(request);
+
+      /// Kullanıcı [Restaurant Güncelleme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Güncelleme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Güncelleme İşlemi Başarılı ise]
       return Right(response);
     } catch (e) {
       return Left(

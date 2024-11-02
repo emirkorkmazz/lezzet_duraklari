@@ -39,4 +39,12 @@ abstract class RestaurantClient {
   Future<ReviewReplyResponse> reviewReply(
     @Body() ReviewReplyRequest request,
   );
+
+  @GET(AppUrls.getRestaurantById)
+  Future<RestaurantDetailResponse> getRestaurantById(@Path('id') String id);
+
+  @POST(AppUrls.updateRestaurant)
+  Future<RestaurantUpdateResponse> updateRestaurant(
+    @Body() RestaurantUpdateRequest request,
+  );
 }

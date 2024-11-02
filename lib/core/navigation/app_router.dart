@@ -91,6 +91,12 @@ List<RouteBase> get _routes {
         );
       },
     ),
+
+    GoRoute(
+      path: AppRouteName.restaurantUpdate.path,
+      name: AppRouteName.restaurantUpdate.withoutSlash,
+      builder: (context, state) => const RestaurantUpdateView(),
+    ),
   ];
 }
 

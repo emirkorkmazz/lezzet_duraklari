@@ -23,6 +23,8 @@ import 'package:lezzet_duraklari/domain/restaurant_repository.dart' as _i666;
 import 'package:lezzet_duraklari/domain/storage_repository.dart' as _i125;
 import 'package:lezzet_duraklari/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart'
     as _i275;
+import 'package:lezzet_duraklari/restaurant/restaurant-update/bloc/restaurant_update_bloc.dart'
+    as _i1014;
 import 'package:lezzet_duraklari/restaurant/restaurant_menu/cubit/restaurant_menu_cubit.dart'
     as _i444;
 import 'package:lezzet_duraklari/restaurant/restaurant_review/cubit/restaurant_review_cubit.dart'
@@ -67,6 +69,10 @@ extension GetItInjectableX on _i174.GetIt {
           storageRepository: gh<_i737.IStorageRepository>(),
         ));
     gh.factory<_i569.RestaurantReviewCubit>(() => _i569.RestaurantReviewCubit(
+          restaurantRepository: gh<_i737.IRestaurantRepository>(),
+          storageRepository: gh<_i737.IStorageRepository>(),
+        ));
+    gh.factory<_i1014.RestaurantUpdateBloc>(() => _i1014.RestaurantUpdateBloc(
           restaurantRepository: gh<_i737.IRestaurantRepository>(),
           storageRepository: gh<_i737.IStorageRepository>(),
         ));

@@ -1,12 +1,12 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 
 import '/core/core.dart';
 import '/restaurant/restaurant.dart';
@@ -75,7 +75,7 @@ class _AddRestaurantViewBody extends StatelessWidget {
 }
 
 class _AddImageRow extends StatefulWidget {
-  const _AddImageRow({super.key});
+  const _AddImageRow();
 
   @override
   State<_AddImageRow> createState() => _AddImageRowState();
@@ -115,14 +115,15 @@ class _AddImageRowState extends State<_AddImageRow> {
             child: const Text('Logo Seç'),
           ),
         const SizedBox(height: 20),
-        _imageFile != null
-            ? Image.file(
-                File(_imageFile!.path),
-                fit: BoxFit.cover,
-                width: 100,
-                height: 100,
-              )
-            : const Center(child: Text('Henüz logo seçilmedi.')),
+        if (_imageFile != null)
+          Image.file(
+            File(_imageFile!.path),
+            fit: BoxFit.cover,
+            width: 100,
+            height: 100,
+          )
+        else
+          const Center(child: Text('Henüz logo seçilmedi.')),
       ],
     );
   }
@@ -329,7 +330,7 @@ class _MapPickerState extends State<_MapPicker> {
           child: FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: _currentLocation ?? LatLng(41.0082, 28.9784),
+              initialCenter: _currentLocation ?? const LatLng(41.0082, 28.9784),
               initialZoom: 15,
               onTap: (tapPosition, point) {
                 setState(() {
@@ -337,7 +338,9 @@ class _MapPickerState extends State<_MapPicker> {
                 });
                 context.read<AddRestaurantBloc>().add(
                       AddRestaurantLocationChanged(
-                          point.latitude, point.longitude),
+                        point.latitude,
+                        point.longitude,
+                      ),
                     );
               },
             ),

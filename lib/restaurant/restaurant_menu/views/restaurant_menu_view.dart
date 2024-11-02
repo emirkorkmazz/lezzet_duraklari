@@ -172,27 +172,27 @@ class _RestaurantMenuBody extends StatelessWidget {
           context,
           menuPhotos?.menu1,
           photo1.value,
-          "menu1",
+          'menu1',
           1,
-          "1. Menü Fotoğrafı",
+          '1. Menü Fotoğrafı',
         ),
         const SizedBox(height: 10),
         _buildMenuItem(
           context,
           menuPhotos?.menu2,
           photo2.value,
-          "menu2",
+          'menu2',
           2,
-          "2. Menü Fotoğrafı",
+          '2. Menü Fotoğrafı',
         ),
         const SizedBox(height: 10),
         _buildMenuItem(
           context,
           menuPhotos?.menu3,
           photo3.value,
-          "menu3",
+          'menu3',
           3,
-          "3. Menü Fotoğrafı",
+          '3. Menü Fotoğrafı',
         ),
       ],
     );
@@ -252,7 +252,7 @@ class _RestaurantMenuBody extends StatelessWidget {
                           return const Column(
                             children: [
                               Icon(Icons.error, color: Colors.red),
-                              Text("Resim yüklenemedi"),
+                              Text('Resim yüklenemedi'),
                             ],
                           );
                         },
@@ -268,7 +268,7 @@ class _RestaurantMenuBody extends StatelessWidget {
                                 onPickImage(photoIndex);
                               },
                               child: const Text(
-                                "Fotoğraf seç",
+                                'Fotoğraf seç',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ),
@@ -291,7 +291,7 @@ class _RestaurantMenuBody extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text("Sil", style: TextStyle(color: Colors.red)),
+                child: const Text('Sil', style: TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -301,7 +301,7 @@ class _RestaurantMenuBody extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
-  const _SubmitButton({super.key});
+  const _SubmitButton();
 
   @override
   Widget build(BuildContext context) {

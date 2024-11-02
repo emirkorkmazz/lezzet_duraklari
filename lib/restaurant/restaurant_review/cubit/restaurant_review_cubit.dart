@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '/core/core.dart';
 import '/data/data.dart';
 import '/domain/domain.dart';
 
@@ -20,10 +19,12 @@ class RestaurantReviewCubit extends Cubit<RestaurantReviewState> {
   static const _pageSize = 10;
 
   Future<void> fetchReviews() async {
-    emit(state.copyWith(
-      status: RestaurantReviewStatus.loading,
-      message: null,
-    ));
+    emit(
+      state.copyWith(
+        status: RestaurantReviewStatus.loading,
+        message: null,
+      ),
+    );
 
     try {
       final restaurantId = await storageRepository.getRestaurantId();
@@ -36,29 +37,35 @@ class RestaurantReviewCubit extends Cubit<RestaurantReviewState> {
       );
 
       result.fold(
-        (failure) => emit(state.copyWith(
-          status: RestaurantReviewStatus.failure,
-          message: failure.message,
-        )),
+        (failure) => emit(
+          state.copyWith(
+            status: RestaurantReviewStatus.failure,
+            message: failure.message,
+          ),
+        ),
         (response) {
           final totalCount = response.totalCount ?? 0;
           final hasReachedEnd = (state.currentPage * _pageSize) >= totalCount;
 
-          emit(state.copyWith(
-            status: RestaurantReviewStatus.success,
-            reviews: response.reviews ?? [],
-            hasReachedEnd: hasReachedEnd,
-            currentPage: 1,
-            totalCount: totalCount,
-            message: null,
-          ));
+          emit(
+            state.copyWith(
+              status: RestaurantReviewStatus.success,
+              reviews: response.reviews ?? [],
+              hasReachedEnd: hasReachedEnd,
+              currentPage: 1,
+              totalCount: totalCount,
+              message: null,
+            ),
+          );
         },
       );
     } catch (e) {
-      emit(state.copyWith(
-        status: RestaurantReviewStatus.failure,
-        message: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: RestaurantReviewStatus.failure,
+          message: e.toString(),
+        ),
+      );
     }
   }
 
@@ -66,10 +73,12 @@ class RestaurantReviewCubit extends Cubit<RestaurantReviewState> {
     if (state.hasReachedEnd ||
         state.status == RestaurantReviewStatus.loadingMore) return;
 
-    emit(state.copyWith(
-      status: RestaurantReviewStatus.loadingMore,
-      message: null,
-    ));
+    emit(
+      state.copyWith(
+        status: RestaurantReviewStatus.loadingMore,
+        message: null,
+      ),
+    );
 
     final restaurantId = await storageRepository.getRestaurantId();
     final result = await restaurantRepository.restaurantReviewsList(
@@ -81,14 +90,16 @@ class RestaurantReviewCubit extends Cubit<RestaurantReviewState> {
     );
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: RestaurantReviewStatus.failure,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: RestaurantReviewStatus.failure,
+        ),
+      ),
       (response) {
         final reviews = response.reviews ?? [];
         final newReviews = List<Reviews>.from([...state.reviews, ...reviews]);
         final totalCount = response.totalCount ?? 0;
-        final hasReachedEnd = (newReviews.length >= totalCount);
+        final hasReachedEnd = newReviews.length >= totalCount;
 
         emit(state.copyWith(
           status: RestaurantReviewStatus.success,
