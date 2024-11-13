@@ -47,4 +47,19 @@ abstract class RestaurantClient {
   Future<RestaurantUpdateResponse> updateRestaurant(
     @Body() RestaurantUpdateRequest request,
   );
+
+  @POST(AppUrls.restaurantPhotoList)
+  Future<RestaurantPhotoListResponse> restaurantPhotoList(
+    @Body() RestaurantPhotoListRequest request,
+  );
+
+  @DELETE(AppUrls.deleteRestaurantPhoto)
+  Future<RestaurantPhotoDeleteResponse> restaurantPhotoDelete(
+    @Body() RestaurantPhotoDeleteRequest request,
+  );
+
+  @POST(AppUrls.addRestaurantPhoto)
+  Future<RestaurantPhotoAddResponse> addRestaurantPhoto(
+    @Body() RestaurantPhotoAddRequest request,
+  );
 }

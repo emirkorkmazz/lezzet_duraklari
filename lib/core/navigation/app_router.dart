@@ -97,6 +97,12 @@ List<RouteBase> get _routes {
       name: AppRouteName.restaurantUpdate.withoutSlash,
       builder: (context, state) => const RestaurantUpdateView(),
     ),
+
+    GoRoute(
+      path: AppRouteName.restaurantPhoto.path,
+      name: AppRouteName.restaurantPhoto.withoutSlash,
+      builder: (context, state) => const RestaurantPhotoView(),
+    ),
   ];
 }
 

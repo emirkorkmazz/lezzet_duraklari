@@ -10,7 +10,8 @@ enum AppRouteName {
   restaurantMenu('/restaurant/menu'),
   restaurantReview('/restaurant/review'),
   reviewReply('/restaurant/review/reply'),
-  restaurantUpdate('/restaurant/update');
+  restaurantUpdate('/restaurant/update'),
+  restaurantPhoto('/restaurant/photo');
 
   const AppRouteName(this.path);
   final String path;

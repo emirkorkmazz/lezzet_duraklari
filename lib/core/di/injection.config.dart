@@ -21,14 +21,16 @@ import 'package:lezzet_duraklari/domain/auth_repository.dart' as _i480;
 import 'package:lezzet_duraklari/domain/domain.dart' as _i737;
 import 'package:lezzet_duraklari/domain/restaurant_repository.dart' as _i666;
 import 'package:lezzet_duraklari/domain/storage_repository.dart' as _i125;
-import 'package:lezzet_duraklari/restaurant/add-restaurant/bloc/add_restaurant_bloc.dart'
-    as _i275;
-import 'package:lezzet_duraklari/restaurant/restaurant-update/bloc/restaurant_update_bloc.dart'
-    as _i1014;
+import 'package:lezzet_duraklari/restaurant/add_restaurant/bloc/add_restaurant_bloc.dart'
+    as _i500;
 import 'package:lezzet_duraklari/restaurant/restaurant_menu/cubit/restaurant_menu_cubit.dart'
     as _i444;
+import 'package:lezzet_duraklari/restaurant/restaurant_photo/cubit/restaurant_photo_cubit.dart'
+    as _i373;
 import 'package:lezzet_duraklari/restaurant/restaurant_review/cubit/restaurant_review_cubit.dart'
     as _i569;
+import 'package:lezzet_duraklari/restaurant/restaurant_update/bloc/restaurant_update_bloc.dart'
+    as _i818;
 import 'package:lezzet_duraklari/restaurant/review_reply/bloc/review_reply_bloc.dart'
     as _i317;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -56,9 +58,9 @@ extension GetItInjectableX on _i174.GetIt {
         () => registerModule.securedStorage);
     gh.singleton<_i666.IRestaurantRepository>(() => _i666.RestaurantRepository(
         restaurantClient: gh<_i85.RestaurantClient>()));
-    gh.factory<_i275.AddRestaurantBloc>(() => _i275.AddRestaurantBloc(
-        restaurantRepository: gh<_i737.IRestaurantRepository>()));
     gh.factory<_i317.ReviewReplyBloc>(() => _i317.ReviewReplyBloc(
+        restaurantRepository: gh<_i737.IRestaurantRepository>()));
+    gh.factory<_i500.AddRestaurantBloc>(() => _i500.AddRestaurantBloc(
         restaurantRepository: gh<_i737.IRestaurantRepository>()));
     gh.factory<_i125.IStorageRepository>(() => _i125.StorageRepository(
           securedStorage: gh<_i558.FlutterSecureStorage>(),
@@ -72,7 +74,11 @@ extension GetItInjectableX on _i174.GetIt {
           restaurantRepository: gh<_i737.IRestaurantRepository>(),
           storageRepository: gh<_i737.IStorageRepository>(),
         ));
-    gh.factory<_i1014.RestaurantUpdateBloc>(() => _i1014.RestaurantUpdateBloc(
+    gh.factory<_i373.RestaurantPhotoCubit>(() => _i373.RestaurantPhotoCubit(
+          restaurantRepository: gh<_i737.IRestaurantRepository>(),
+          storageRepository: gh<_i737.IStorageRepository>(),
+        ));
+    gh.factory<_i818.RestaurantUpdateBloc>(() => _i818.RestaurantUpdateBloc(
           restaurantRepository: gh<_i737.IRestaurantRepository>(),
           storageRepository: gh<_i737.IStorageRepository>(),
         ));

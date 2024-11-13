@@ -34,4 +34,13 @@ final class AppUrls {
 
   ///
   static const String updateRestaurant = '/api/restaurant/update';
+
+  ///
+  static const String restaurantPhotoList = '/api/photo/restaurant';
+
+  ///
+  static const String deleteRestaurantPhoto = '/api/photo/delete';
+
+  ///
+  static const String addRestaurantPhoto = '/api/photo/add';
 }

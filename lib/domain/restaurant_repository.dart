@@ -37,6 +37,19 @@ abstract class IRestaurantRepository {
   Future<Either<AuthFailure, RestaurantDetailResponse>> restaurantDetail({
     required String restaurantId,
   });
+
+  Future<Either<AuthFailure, RestaurantPhotoListResponse>> restaurantPhotoList({
+    required RestaurantPhotoListRequest request,
+  });
+
+  Future<Either<AuthFailure, RestaurantPhotoDeleteResponse>>
+      restaurantPhotoDelete({
+    required RestaurantPhotoDeleteRequest request,
+  });
+
+  Future<Either<AuthFailure, RestaurantPhotoAddResponse>> restaurantPhotoAdd({
+    required RestaurantPhotoAddRequest request,
+  });
 }
 
 @Singleton(as: IRestaurantRepository)
@@ -260,6 +273,88 @@ class RestaurantRepository implements IRestaurantRepository {
       }
 
       /// [Restaurant Güncelleme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantPhotoListResponse>> restaurantPhotoList({
+    required RestaurantPhotoListRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.restaurantPhotoList(request);
+
+      /// Kullanıcı [Restaurant Resimleri Getirme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Resimleri Getirme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Resimleri Getirme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantPhotoDeleteResponse>>
+      restaurantPhotoDelete({
+    required RestaurantPhotoDeleteRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.restaurantPhotoDelete(request);
+
+      /// Kullanıcı [Restaurant Resim Silme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Resim Silme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Resim Silme İşlemi Başarılı ise]
+      return Right(response);
+    } catch (e) {
+      return Left(
+        AuthFailure(
+          message: '$e',
+        ),
+      );
+    }
+  }
+
+  ///
+  Future<Either<AuthFailure, RestaurantPhotoAddResponse>> restaurantPhotoAdd({
+    required RestaurantPhotoAddRequest request,
+  }) async {
+    try {
+      final response = await restaurantClient.addRestaurantPhoto(request);
+
+      /// Kullanıcı [Restaurant Resim Ekleme] işlemi [Başarısız] ise
+      if (response.status == null || !response.status!) {
+        return const Left(
+          AuthFailure(
+            message: 'Restaurant Resim Ekleme İşlemi Başarısız',
+          ),
+        );
+      }
+
+      /// [Restaurant Resim Ekleme İşlemi Başarılı ise]
       return Right(response);
     } catch (e) {
       return Left(

@@ -24,6 +24,11 @@ class _RestaurantHomePageViewState extends State<RestaurantHomePageView> {
       onTap: (context) => context.push(AppRouteName.restaurantUpdate.path),
     ),
     _MenuItem(
+      title: 'Restoran Resmi',
+      icon: Icons.photo,
+      onTap: (context) => context.push(AppRouteName.restaurantPhoto.path),
+    ),
+    _MenuItem(
       title: 'Menü Düzenle',
       icon: Icons.coffee,
       onTap: (context) => context.push(AppRouteName.restaurantMenu.path),
